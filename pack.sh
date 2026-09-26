@@ -9,7 +9,7 @@ echo "== 1/3 tests in source: $app"
 (cd "$root/$app" && npm test --silent)
 echo "== 2/3 zip"
 mkdir -p "$root/dist"; rm -f "$out"
-(cd "$root" && zip -qr "$out" "$app" -x "$app/data/*.db*" "$app/data/*.log" "$app/data/chrome/*" "$app/node_modules/*")
+(cd "$root" && zip -qr "$out" "$app" -x "$app/data/*.db*" "$app/data/*.log" "$app/data/chrome/*" "$app/data/photos/*.jpg" "$app/node_modules/*")
 echo "== 3/3 tests from clean unzip"
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 unzip -q "$out" -d "$tmp"

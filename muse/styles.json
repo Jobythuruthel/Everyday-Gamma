@@ -1,0 +1,19 @@
+{
+  "_note": "Styles per event. 'local' is the offline look drawn in the browser; 'prompt' is used only when an image API key is configured.",
+  "event": { "en": "FAIM Demo Summit 2026", "ar": "قمة فايم التجريبية ٢٠٢٦" },
+  "hashtag": "#FAIMSummit",
+  "styles": [
+    { "id": "cyber", "title": { "en": "Cyber Guardian", "ar": "حارس السيبراني" }, "tagline": { "en": "Defender of the digital city", "ar": "مدافع المدينة الرقمية" },
+      "local": { "shadow": [2, 14, 12], "mid": [20, 140, 110], "light": [190, 255, 220], "scanlines": true, "grain": 0.05, "vignette": 0.55, "accent": "#8FE060" },
+      "prompt": "Transform this person into a cyber security guardian in a futuristic smart city at night, glowing green holographic interface, cinematic lighting, keep the face and identity exactly the same, tasteful, professional, fully clothed" },
+    { "id": "industrial", "title": { "en": "Industrial Innovator", "ar": "مبتكر الصناعة" }, "tagline": { "en": "Building what comes next", "ar": "نبني المستقبل" },
+      "local": { "shadow": [18, 8, 2], "mid": [170, 90, 30], "light": [255, 225, 170], "scanlines": false, "grain": 0.09, "vignette": 0.6, "accent": "#F5A524" },
+      "prompt": "Transform this person into an industrial innovator in a modern steel plant with warm sparks and golden light, wearing a hard hat, cinematic, keep the face and identity exactly the same, professional" },
+    { "id": "space", "title": { "en": "Space Explorer", "ar": "مستكشف الفضاء" }, "tagline": { "en": "Next stop: the stars", "ar": "المحطة القادمة: النجوم" },
+      "local": { "shadow": [4, 4, 22], "mid": [60, 60, 170], "light": [200, 210, 255], "scanlines": false, "stars": true, "grain": 0.04, "vignette": 0.5, "accent": "#9AA8FF" },
+      "prompt": "Transform this person into an astronaut explorer with a helmet visor reflecting a nebula, deep space background, cinematic, keep the face and identity exactly the same, professional" },
+    { "id": "vision", "title": { "en": "Vision Leader", "ar": "قائد الرؤية" }, "tagline": { "en": "Leading the national vision", "ar": "نقود الرؤية الوطنية" },
+      "local": { "shadow": [8, 8, 8], "mid": [120, 120, 120], "light": [245, 240, 225], "scanlines": false, "grain": 0.06, "vignette": 0.65, "accent": "#E3B341" },
+      "prompt": "Transform this person into a confident visionary leader in an elegant modern office overlooking a Gulf city skyline at golden hour, formal attire, cinematic portrait, keep the face and identity exactly the same, professional" }
+  ]
+}

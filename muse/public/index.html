@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MUSE</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button class="lang" id="lang" type="button">العربية</button>
+<main>
+  <section class="screen on" id="s-attract">
+    <span class="label" id="event"></span>
+    <h1 data-t="attractTitle"></h1>
+    <p class="sub" data-t="attractSub"></p>
+    <button class="primary" id="go" type="button"><span data-t="start"></span></button>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <section class="screen" id="s-style">
+    <span class="label" data-t="step1"></span>
+    <h2 data-t="pickWorld"></h2>
+    <div class="styles" id="styles"></div>
+    <button type="button" data-home><span data-t="back"></span></button>
+  </section>
+
+  <section class="screen" id="s-consent">
+    <span class="label" data-t="step2"></span>
+    <h2 data-t="consentTitle"></h2>
+    <div class="panel" style="display:grid;gap:16px">
+      <p class="sub" id="consent-body"></p>
+      <label class="check"><input type="checkbox" id="consent"><span data-t="consentBox"></span></label>
+      <p class="error" id="consent-err" role="alert"></p>
+      <div class="row"><button type="button" data-home><span data-t="back"></span></button><button class="primary" id="consent-go" type="button"><span data-t="continue"></span></button></div>
+    </div>
+  </section>
+
+  <section class="screen" id="s-camera">
+    <span class="label" data-t="step3"></span>
+    <div class="stage"><video id="video" autoplay playsinline muted></video><div class="guide"></div><div class="count" id="count"></div><div class="flash" id="flash"></div></div>
+    <p class="error" id="cam-err" role="alert"></p>
+    <button class="primary" id="shoot" type="button"><span data-t="shoot"></span></button>
+  </section>
+
+  <section class="screen" id="s-work">
+    <span class="label" data-t="working"></span>
+    <h2 id="work-line"></h2>
+    <div class="progress"><i></i></div>
+  </section>
+
+  <section class="screen" id="s-result">
+    <div class="stage"><img id="result" alt=""></div>
+    <div class="row">
+      <button class="primary" id="want" type="button"><span data-t="getPhoto"></span></button>
+      <button type="button" id="retake"><span data-t="retake"></span></button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-lead">
+    <span class="label" data-t="step4"></span>
+    <h2 data-t="leadTitle"></h2>
+    <form id="f-lead" class="panel" novalidate style="display:grid;gap:16px" autocomplete="off">
+      <label class="field"><span data-t="email"></span><input name="email" type="email" inputmode="email" maxlength="120"></label>
+      <label class="field"><span data-t="mobile"></span><input name="mobile" inputmode="tel" maxlength="20"></label>
+      <label class="check"><input type="checkbox" name="marketing"><span data-t="marketing"></span></label>
+      <p class="error" id="lead-err" role="alert"></p>
+      <button class="primary" type="submit"><span data-t="unlock"></span></button>
+    </form>
+  </section>
+
+  <section class="screen" id="s-qr">
+    <span class="label" data-t="ready"></span>
+    <h2 data-t="scanTitle"></h2>
+    <div id="qr"></div>
+    <p class="sub" data-t="scanSub"></p>
+    <button type="button" data-home><span data-t="done"></span></button>
+  </section>
+</main>
+<div class="credit">FX-9206 MUSE · Joby Thuruthel | FAIM</div>
+<script src="vendor/qrcode.js"></script>
+<script src="render.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

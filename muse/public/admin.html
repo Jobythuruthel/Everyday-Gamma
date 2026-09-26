@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MUSE Operator</title>
+<link rel="stylesheet" href="style.css">
+<style>body{overflow:auto;user-select:text}main{align-items:start}.stat{font:700 36px var(--mono);color:var(--green-hi)}#panel:not([hidden]){display:grid;gap:24px}.queue{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}.queue figure{margin:0;display:grid;gap:8px}.queue img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:12px}.queue button{min-height:44px;font-size:14px}</style>
+</head>
+<body>
+<main><section class="screen on">
+  <span class="label">MUSE · Operator</span>
+  <form id="login" class="row"><input id="pin" type="password" placeholder="Operator PIN" style="max-width:240px"><button class="primary">Unlock</button></form>
+  <p class="error" id="err" style="color:var(--ink-2)"></p>
+  <div id="panel" hidden>
+    <div class="grid" id="stats"></div>
+    <div class="panel"><h2>Waiting for approval</h2><p class="sub">Only approved portraits appear on the booth screen. Visitors can always download their own.</p><div class="queue" id="queue"></div></div>
+    <div class="row"><button class="primary" id="csv">Download leads CSV</button><button id="purge">Delete expired photos now</button></div>
+  </div>
+</section></main>
+<script>
+let pin = '';
+const $ = s => document.querySelector(s);
+const call = (p, body) => fetch(p, { method: body ? 'POST' : 'GET', headers: { 'x-admin-pin': pin, 'content-type': 'application/json' }, body: body && JSON.stringify(body) })
+  .then(async r => { const d = await r.json(); if (!r.ok) throw new Error(r.status === 403 ? 'Wrong PIN' : d.error); return d; });
+const btn = (label, fn, primary) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; if (primary) b.className = 'primary'; b.onclick = fn; return b; };
+const urls = new Map();
+async function img(id) {
+  if (!urls.has(id)) { const r = await fetch('/api/admin/image?id=' + id, { headers: { 'x-admin-pin': pin } }); urls.set(id, URL.createObjectURL(await r.blob())); }
+  return urls.get(id);
+}
+async function load() {
+  const [s, q] = await Promise.all([call('/api/admin/stats'), call('/api/admin/pending')]);
+  const tiles = [['Portraits', s.sessions], ['Leads', s.leads + (s.leadRate === null ? '' : ` (${s.leadRate}%)`)], ['Marketing opt-ins', s.marketingOptIns], ['Downloads', s.downloads], ['Top style', s.byStyle[0]?.style ?? 'n/a'], ['Waiting', s.pending]];
+  $('#stats').replaceChildren(...tiles.map(([k, v]) => { const d = document.createElement('div'); d.className = 'panel'; d.innerHTML = '<div class="label"></div><div class="stat"></div>'; d.children[0].textContent = k; d.children[1].textContent = v; return d; }));
+  const figs = await Promise.all(q.map(async p => {
+    const f = document.createElement('figure'), im = new Image();
+    im.src = await img(p.id); im.alt = p.style;
+    const row = document.createElement('div'); row.className = 'row';
+    row.append(btn('Approve', async () => { await call('/api/admin/review', { id: p.id, decision: 'approved' }); load(); }, true),
+      btn('Hide', async () => { await call('/api/admin/review', { id: p.id, decision: 'rejected' }); load(); }),
+      btn('Delete', async () => { if (confirm('Delete this photo permanently?')) { await call('/api/admin/delete', { id: p.id }); load(); } }));
+    f.append(im, row); return f;
+  }));
+  $('#queue').replaceChildren(...(figs.length ? figs : [Object.assign(document.createElement('p'), { className: 'sub', textContent: 'Nothing waiting.' })]));
+  $('#panel').hidden = false;
+}
+$('#login').onsubmit = e => { e.preventDefault(); pin = $('#pin').value; load().then(() => { $('#err').textContent = ''; }).catch(x => { $('#err').textContent = x.message; }); };
+$('#csv').onclick = async () => { const r = await fetch('/api/admin/export.csv', { headers: { 'x-admin-pin': pin } }); const a = document.createElement('a'); a.href = URL.createObjectURL(await r.blob()); a.download = 'muse-leads.csv'; a.click(); };
+$('#purge').onclick = async () => { const r = await call('/api/admin/purge', {}); $('#err').textContent = `${r.purged} expired photos deleted.`; load(); };
+setInterval(() => { if (pin) load().catch(() => {}); }, 8000);
+</script>
+</body>
+</html>
