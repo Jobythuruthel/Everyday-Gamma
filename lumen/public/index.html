@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LUMEN</title>
+<style>
+:root { --ink: #F2F5F0; --ink-2: rgba(242,245,240,.62); --green: #6FBD44; --green-hi: #8FE060; --line: rgba(242,245,240,.14); --ease: cubic-bezier(.22,1,.36,1); }
+* { box-sizing: border-box; margin: 0; }
+html, body { height: 100%; background: #000; color: var(--ink); font: 17px/1.5 Arial, "Segoe UI", Tahoma, sans-serif; overflow: hidden; user-select: none; cursor: none; }
+body.touch { cursor: default; }
+canvas#holo { position: fixed; inset: 0; width: 100%; height: 100%; }
+.caption { position: fixed; left: 50%; bottom: 17vh; transform: translateX(-50%); width: min(90vw, 900px); text-align: center; font-size: clamp(24px, 3.4vw, 44px); font-weight: 700; line-height: 1.25; opacity: 0; transition: opacity 600ms var(--ease); text-shadow: 0 0 24px rgba(143,224,96,.35); }
+.caption.on { opacity: 1; }
+.dock { position: fixed; left: 50%; bottom: 6vh; transform: translateX(-50%) translateY(20px); display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 400ms var(--ease), transform 400ms var(--ease); width: min(94vw, 900px); }
+.dock.on { opacity: 1; pointer-events: auto; transform: translateX(-50%); }
+.dock button { font: 600 18px Arial, sans-serif; color: var(--ink); background: rgba(242,245,240,.06); border: 1px solid var(--line); border-radius: 999px; min-height: 56px; padding: 0 24px; cursor: pointer; }
+.dock button:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+.status { position: fixed; top: 12px; left: 12px; font: 12px "Courier New", monospace; color: var(--ink-2); opacity: .35; letter-spacing: .12em; text-transform: uppercase; }
+video, #diff { display: none; }
+@media (prefers-reduced-motion: reduce) { .caption, .dock { transition: none; } }
+</style>
+</head>
+<body>
+<canvas id="holo"></canvas>
+<div class="caption" id="caption" aria-live="polite"></div>
+<div class="dock" id="dock"></div>
+<div class="status" id="status"></div>
+<video id="cam" playsinline muted></video>
+<canvas id="diff" width="160" height="90"></canvas>
+<script src="presence.js"></script>
+<script src="figure.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

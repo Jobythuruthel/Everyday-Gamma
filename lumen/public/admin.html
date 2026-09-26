@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LUMEN Operator</title>
+<style>
+:root { --void: #040705; --ink: #F2F5F0; --ink-2: rgba(242,245,240,.62); --green: #6FBD44; --green-hi: #8FE060; --glass: rgba(242,245,240,.045); --line: rgba(242,245,240,.12); }
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--void); color: var(--ink); font: 16px/1.5 Arial, sans-serif; padding: 32px 16px; }
+main { width: min(1100px, 100%); margin: 0 auto; display: grid; gap: 24px; }
+.label { font: 12px "Courier New", monospace; letter-spacing: .18em; text-transform: uppercase; color: var(--green); }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.panel { background: var(--glass); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+.stat { font: 700 34px "Courier New", monospace; color: var(--green-hi); }
+button, input { font: 600 16px Arial, sans-serif; color: var(--ink); background: var(--glass); border: 1px solid var(--line); border-radius: 12px; min-height: 52px; padding: 0 20px; cursor: pointer; }
+button.primary { background: var(--green); color: var(--void); border-color: var(--green); }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.sub { color: var(--ink-2); }
+#panel[hidden] { display: none; }
+#panel { display: grid; gap: 24px; }
+</style>
+</head>
+<body>
+<main>
+  <span class="label">LUMEN · Operator</span>
+  <form id="login" class="row"><input id="pin" type="password" placeholder="Operator PIN"><button class="primary">Unlock</button></form>
+  <p class="sub" id="msg"></p>
+  <div id="panel" hidden>
+    <div class="grid" id="stats"></div>
+    <div class="panel"><h2>Test the zones</h2><p class="sub">Acts like an external sensor. The hologram screen reacts within a second.</p>
+      <div class="row" style="margin-top:12px"><button data-zone="empty">Empty</button><button data-zone="passing">Passing (&gt; 3 m)</button><button data-zone="attention">Attention (2–3 m)</button><button data-zone="interaction" class="primary">Interaction (&lt; 2 m)</button></div></div>
+    <div class="panel"><h2>Guest list for named greetings</h2><p class="sub">CSV columns: code, name, title, lang (en or ar). A badge scan with that code greets the guest by first name in their language.</p>
+      <div class="row" style="margin-top:12px"><input type="file" id="csvfile" accept=".csv,text/csv"><button class="primary" id="import">Import</button></div></div>
+  </div>
+</main>
+<script>
+let pin = '';
+const $ = s => document.querySelector(s);
+const call = (p, body) => fetch(p, { method: body ? 'POST' : 'GET', headers: { 'x-admin-pin': pin, 'content-type': 'application/json' }, body: body && JSON.stringify(body) })
+  .then(async r => { const d = await r.json(); if (!r.ok) throw new Error(r.status === 403 ? 'Wrong PIN' : d.error); return d; });
+async function load() {
+  const s = await call('/api/admin/stats');
+  const tiles = [['Passers-by', s.passersBy], ['Approached', s.approaches + (s.approachRate === null ? '' : ` (${s.approachRate}%)`)], ['Greeted', s.greeted], ['By name', s.namedGreetings], ['Avg dwell', s.avgDwellSec + ' s'], ['Questions', s.questions], ['Last hour', s.lastHour], ['Guests on list', s.guests]];
+  $('#stats').replaceChildren(...tiles.map(([k, v]) => { const d = document.createElement('div'); d.className = 'panel'; d.innerHTML = '<div class="label"></div><div class="stat"></div>'; d.children[0].textContent = k; d.children[1].textContent = v; return d; }));
+  $('#panel').hidden = false;
+}
+$('#login').onsubmit = e => { e.preventDefault(); pin = $('#pin').value; load().then(() => { $('#msg').textContent = ''; }).catch(x => { $('#msg').textContent = x.message; }); };
+document.querySelectorAll('[data-zone]').forEach(b => { b.onclick = () => call('/api/presence', { zone: b.dataset.zone }).then(() => { $('#msg').textContent = 'Sent: ' + b.dataset.zone; }); });
+$('#import').onclick = async () => { const f = $('#csvfile').files[0]; if (!f) return; try { const r = await call('/api/admin/guests', { csv: await f.text() }); $('#msg').textContent = `${r.imported} guests imported${r.errors.length ? ', ' + r.errors.length + ' skipped' : ''}.`; load(); } catch (x) { $('#msg').textContent = 'Import failed: ' + x.message; } };
+setInterval(() => { if (pin) load().catch(() => {}); }, 8000);
+</script>
+</body>
+</html>
