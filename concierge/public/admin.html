@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONCIERGE Staff</title>
+<link rel="stylesheet" href="style.css">
+<style>body{overflow:auto;user-select:text}main{align-items:start}.stat{font:700 36px var(--mono);color:var(--green-hi)}td,th{padding:8px 12px;text-align:start;border-bottom:1px solid var(--line)}table{border-collapse:collapse;width:100%;font-size:15px}td button{min-height:40px;font-size:14px;padding:0 12px}.alert{border-color:#E3B341}#panel:not([hidden]){display:grid;gap:24px}</style>
+</head>
+<body>
+<main><section class="screen on">
+  <span class="label">CONCIERGE · Staff</span>
+  <form id="login" class="row"><input id="pin" type="password" placeholder="Staff PIN" style="max-width:240px"><button class="primary">Unlock</button></form>
+  <p class="error" id="err" style="color:var(--ink-2)"></p>
+  <div id="panel" hidden>
+    <div class="grid" id="stats"></div>
+    <div class="panel" id="al-wrap"><h2>VIP arrivals</h2><table><tbody id="alerts"></tbody></table></div>
+    <div class="panel"><h2>Latest arrivals</h2><table><thead><tr><th>Time</th><th>Name</th><th>Company</th><th>Type</th><th></th></tr></thead><tbody id="arrivals"></tbody></table></div>
+    <div class="panel" style="display:grid;gap:12px">
+      <h2>Pre-registration import</h2>
+      <p class="sub">CSV with a header row. Columns: name (required), company, email, mobile, category (ATTENDEE, VIP, SPEAKER, EXHIBITOR, MEDIA, STAFF), code, host_name, host_contact. Re-importing updates existing people by code or email.</p>
+      <div class="row"><input type="file" id="csvfile" accept=".csv,text/csv" style="max-width:420px"><button class="primary" id="import">Import</button></div>
+    </div>
+    <div class="row"><button class="primary" id="csv">Download attendee CSV</button><button id="retry">Retry failed prints</button></div>
+  </div>
+</section></main>
+<script>
+let pin = '', seen = new Set();
+const $ = s => document.querySelector(s);
+const call = (p, body) => fetch(p, { method: body ? 'POST' : 'GET', headers: { 'x-admin-pin': pin, 'content-type': 'application/json' }, body: body && JSON.stringify(body) })
+  .then(async r => { const d = await r.json(); if (!r.ok) throw new Error(r.status === 403 ? 'Wrong PIN' : d.error); return d; });
+const td = v => { const c = document.createElement('td'); if (v instanceof Node) c.append(v); else c.textContent = v ?? ''; return c; };
+const btn = (label, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.onclick = fn; return b; };
+function chime() { try { const a = new AudioContext(), o = a.createOscillator(); o.frequency.value = 988; o.connect(a.destination); o.start(); o.stop(a.currentTime + .3); } catch {} }
+async function load() {
+  const [s, al, ar] = await Promise.all([call('/api/admin/stats'), call('/api/admin/alerts'), call('/api/admin/arrivals')]);
+  const failed = s.prints.find(p => p.status === 'failed')?.n ?? 0, pending = s.prints.find(p => p.status === 'pending')?.n ?? 0;
+  const tiles = [['Checked in', `${s.checkedIn} / ${s.registered + s.walkIns}`], ['Walk-ins', s.walkIns], ['VIPs arrived', s.vipArrived], ['Last hour', s.lastHour], ['Print queue', pending], ['Print failures', failed]];
+  $('#stats').replaceChildren(...tiles.map(([k, v]) => { const d = document.createElement('div'); d.className = 'panel'; d.innerHTML = '<div class="label"></div><div class="stat"></div>'; d.children[0].textContent = k; d.children[1].textContent = v; return d; }));
+  if (al.some(x => !seen.has(x.id))) chime();
+  seen = new Set(al.map(x => x.id));
+  $('#al-wrap').classList.toggle('alert', al.length > 0);
+  $('#alerts').replaceChildren(...(al.length ? al.map(x => { const tr = document.createElement('tr'); tr.append(td(new Date(x.created_at).toLocaleTimeString()), td(x.name), td(x.company), td('Host: ' + (x.host_name || 'n/a') + (x.host_contact ? ' · ' + x.host_contact : '')), td('Alert: ' + x.webhook), td(btn('Host met them', async () => { await call('/api/admin/ack', { id: x.id }); load(); }))); return tr; }) : [(() => { const tr = document.createElement('tr'); tr.append(td('No VIPs waiting.')); return tr; })()]));
+  $('#arrivals').replaceChildren(...ar.map(x => { const tr = document.createElement('tr'); tr.append(td(new Date(x.checked_in_at).toLocaleTimeString()), td(x.name), td(x.company), td(x.category + (x.source === 'walkin' ? ' · walk-in' : '')), td(btn('Reprint', async () => { const r = await call('/api/admin/reprint', { id: x.id }); $('#err').textContent = r.badge === 'queued' ? 'Sent to printer.' : 'No printer set: open the badge from the kiosk.'; }))); return tr; }));
+  $('#panel').hidden = false;
+}
+$('#login').onsubmit = e => { e.preventDefault(); pin = $('#pin').value; load().then(() => { $('#err').textContent = ''; }).catch(x => { $('#err').textContent = x.message; }); };
+$('#import').onclick = async () => {
+  const f = $('#csvfile').files[0]; if (!f) return;
+  try { const r = await call('/api/admin/import', { csv: await f.text() }); $('#err').textContent = `Imported: ${r.added} added, ${r.updated} updated${r.errors.length ? ', ' + r.errors.length + ' skipped (' + r.errors.slice(0, 3).join('; ') + ')' : ''}.`; load(); }
+  catch (x) { $('#err').textContent = 'Import failed: ' + x.message; }
+};
+$('#retry').onclick = async () => { const r = await call('/api/admin/retry-prints', {}); $('#err').textContent = `${r.retried} print jobs queued again.`; load(); };
+$('#csv').onclick = async () => { const r = await fetch('/api/admin/export.csv', { headers: { 'x-admin-pin': pin } }); const a = document.createElement('a'); a.href = URL.createObjectURL(await r.blob()); a.download = 'concierge-attendees.csv'; a.click(); };
+setInterval(() => { if (pin) load().catch(() => {}); }, 4000);
+</script>
+</body>
+</html>
