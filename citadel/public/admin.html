@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CITADEL Admin</title>
+<link rel="stylesheet" href="style.css">
+<style>body{overflow:auto;user-select:text}main{align-items:start}.stat{font:700 36px var(--mono);color:var(--green-hi)}td,th{padding:8px 12px;text-align:start;border-bottom:1px solid var(--line)}table{border-collapse:collapse;width:100%;font-size:15px}</style>
+</head>
+<body>
+<main><section class="screen on">
+  <span class="label">CITADEL · Operator</span>
+  <form id="login" class="row"><input id="pin" type="password" placeholder="Admin PIN" style="max-width:240px"><button class="primary">Unlock</button></form>
+  <p class="error" id="err"></p>
+  <div id="panel" hidden>
+    <div class="grid" id="stats"></div>
+    <h2 style="margin-top:24px">Most missed questions</h2>
+    <p class="sub">Share with the client security team: these are the gaps.</p>
+    <table><thead><tr><th>Question</th><th>Asked</th><th>Missed</th></tr></thead><tbody id="missed"></tbody></table>
+    <div class="row" style="margin-top:24px">
+      <button class="primary" id="csv">Download leads CSV</button>
+      <input id="del-id" placeholder="Visitor ID to delete" style="max-width:360px"><button id="del">Delete visitor data</button>
+    </div>
+  </div>
+</section></main>
+<script>
+let pin = '';
+const $ = s => document.querySelector(s);
+const get = (p, raw) => fetch(p, { headers: { 'x-admin-pin': pin } }).then(r => { if (!r.ok) throw new Error(r.status === 403 ? 'Wrong PIN' : 'Error ' + r.status); return raw ? r.blob() : r.json(); });
+async function load() {
+  const s = await get('/api/admin/stats');
+  const tiles = [['Visitors', s.visitors], ['Plays', s.plays], ['Marketing opt-ins', s.marketingOptIns], ['Avg round', (s.avgDurationMs / 1000).toFixed(1) + ' s']];
+  $('#stats').replaceChildren(...tiles.map(([k, v]) => { const d = document.createElement('div'); d.className = 'panel'; d.innerHTML = '<div class="label"></div><div class="stat"></div>'; d.children[0].textContent = k; d.children[1].textContent = v; return d; }));
+  $('#missed').replaceChildren(...s.mostMissed.map(m => { const tr = document.createElement('tr'); for (const v of [m.questionId, m.asked, m.missed]) { const td = document.createElement('td'); td.textContent = v; tr.append(td); } return tr; }));
+  $('#panel').hidden = false; $('#err').textContent = '';
+}
+$('#login').onsubmit = e => { e.preventDefault(); pin = $('#pin').value; load().catch(x => { $('#err').textContent = x.message; }); };
+$('#csv').onclick = async () => { const b = await get('/api/admin/export.csv', true); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'citadel-leads.csv'; a.click(); };
+$('#del').onclick = async () => {
+  const id = $('#del-id').value.trim(); if (!id || !confirm('Permanently delete this visitor\'s data?')) return;
+  const r = await fetch('/api/admin/delete', { method: 'POST', headers: { 'x-admin-pin': pin, 'content-type': 'application/json' }, body: JSON.stringify({ visitorId: id }) });
+  $('#err').textContent = r.ok ? 'Deleted.' : 'Delete failed: ' + (await r.json()).error; load();
+};
+setInterval(() => { if (pin) load().catch(() => {}); }, 15000);
+</script>
+</body>
+</html>

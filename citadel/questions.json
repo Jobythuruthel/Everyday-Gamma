@@ -1,0 +1,80 @@
+{
+  "_note": "DRAFT content. Must be reviewed and approved by the client security team before any event.",
+  "modes": {
+    "phish": {
+      "title": { "en": "Phish or Legit", "ar": "تصيّد أم رسالة سليمة" },
+      "intro": { "en": "Is this message safe? Decide fast.", "ar": "هل هذه الرسالة آمنة؟ قرّر بسرعة." },
+      "timeLimitMs": 12000,
+      "questions": [
+        {
+          "id": "p1", "difficulty": 1,
+          "prompt": { "en": "From: it-support@micros0ft-help.com\n\"Your password expires today. Click here to keep it.\"", "ar": "من: it-support@micros0ft-help.com\n\"كلمة مرورك تنتهي اليوم. اضغط هنا للاحتفاظ بها.\"" },
+          "options": [{ "en": "Phishing", "ar": "تصيّد" }, { "en": "Legit", "ar": "سليمة" }],
+          "answer": 0,
+          "why": { "en": "The domain uses a zero instead of an o, and it pushes urgency.", "ar": "النطاق يستخدم الرقم صفر بدل حرف o، ويضغط عليك بالاستعجال." }
+        },
+        {
+          "id": "p2", "difficulty": 1,
+          "prompt": { "en": "SMS: \"Your parcel is held. Pay 2 SAR customs fee: bit.ly/xx81\"", "ar": "رسالة نصية: \"شحنتك محتجزة. ادفع رسوم جمارك ٢ ريال: bit.ly/xx81\"" },
+          "options": [{ "en": "Phishing", "ar": "تصيّد" }, { "en": "Legit", "ar": "سليمة" }],
+          "answer": 0,
+          "why": { "en": "A tiny fee plus a short link is a classic card-theft trick.", "ar": "رسوم صغيرة مع رابط مختصر حيلة معروفة لسرقة بيانات البطاقة." }
+        },
+        {
+          "id": "p3", "difficulty": 2,
+          "prompt": { "en": "Calendar invite from your manager, sent from the company domain, for the weekly team meeting you already attend.", "ar": "دعوة تقويم من مديرك، من نطاق الشركة، لاجتماع الفريق الأسبوعي الذي تحضره أصلاً." },
+          "options": [{ "en": "Phishing", "ar": "تصيّد" }, { "en": "Legit", "ar": "سليمة" }],
+          "answer": 1,
+          "why": { "en": "Expected sender, correct domain, no link or request. Not every email is an attack.", "ar": "مرسل متوقع ونطاق صحيح بلا روابط أو طلبات. ليست كل رسالة هجوماً." }
+        },
+        {
+          "id": "p4", "difficulty": 2,
+          "prompt": { "en": "Attachment: Invoice_Q3.pdf.exe from a supplier you have never worked with.", "ar": "مرفق: Invoice_Q3.pdf.exe من مورّد لم تتعامل معه من قبل." },
+          "options": [{ "en": "Phishing", "ar": "تصيّد" }, { "en": "Legit", "ar": "سليمة" }],
+          "answer": 0,
+          "why": { "en": "A double extension hides a program inside a fake PDF.", "ar": "الامتداد المزدوج يخفي برنامجاً داخل ملف PDF مزيّف." }
+        },
+        {
+          "id": "p5", "difficulty": 3,
+          "prompt": { "en": "Email from hr@yourcompany.com.sa-benefits.net asking you to confirm your bank details for a bonus.", "ar": "رسالة من hr@yourcompany.com.sa-benefits.net تطلب تأكيد بياناتك البنكية لصرف مكافأة." },
+          "options": [{ "en": "Phishing", "ar": "تصيّد" }, { "en": "Legit", "ar": "سليمة" }],
+          "answer": 0,
+          "why": { "en": "The real domain is the last part: sa-benefits.net. Your company name is just decoration.", "ar": "النطاق الحقيقي هو الجزء الأخير: sa-benefits.net. اسم شركتك مجرد تمويه." }
+        },
+        {
+          "id": "p6", "difficulty": 3,
+          "prompt": { "en": "Password reset email you requested one minute ago, from the service's real domain.", "ar": "رسالة إعادة تعيين كلمة المرور طلبتها قبل دقيقة، من النطاق الحقيقي للخدمة." },
+          "options": [{ "en": "Phishing", "ar": "تصيّد" }, { "en": "Legit", "ar": "سليمة" }],
+          "answer": 1,
+          "why": { "en": "You started the action and the domain matches. This one is expected.", "ar": "أنت من بدأ الطلب والنطاق مطابق. هذه رسالة متوقعة." }
+        }
+      ]
+    },
+    "password": {
+      "title": { "en": "Crack the Password", "ar": "اكسر كلمة المرور" },
+      "intro": { "en": "How long would an attacker need? Pick the strength.", "ar": "كم يحتاج المهاجم من الوقت؟ اختر القوة." },
+      "timeLimitMs": 10000,
+      "questions": [
+        { "id": "w1", "difficulty": 1, "prompt": { "en": "Riyadh2026", "ar": "Riyadh2026" }, "options": [{ "en": "Weak", "ar": "ضعيفة" }, { "en": "Medium", "ar": "متوسطة" }, { "en": "Strong", "ar": "قوية" }], "answer": 0, "why": { "en": "City plus year is one of the first guesses attackers try.", "ar": "اسم مدينة مع سنة من أول التخمينات التي يجربها المهاجمون." } },
+        { "id": "w2", "difficulty": 1, "prompt": { "en": "P@ssw0rd!", "ar": "P@ssw0rd!" }, "options": [{ "en": "Weak", "ar": "ضعيفة" }, { "en": "Medium", "ar": "متوسطة" }, { "en": "Strong", "ar": "قوية" }], "answer": 0, "why": { "en": "Swapping letters for symbols is in every cracking dictionary.", "ar": "استبدال الحروف برموز موجود في كل قواميس الاختراق." } },
+        { "id": "w3", "difficulty": 2, "prompt": { "en": "camel-lantern-orbit-mango", "ar": "camel-lantern-orbit-mango" }, "options": [{ "en": "Weak", "ar": "ضعيفة" }, { "en": "Medium", "ar": "متوسطة" }, { "en": "Strong", "ar": "قوية" }], "answer": 2, "why": { "en": "Four random words make a long passphrase that is easy to remember.", "ar": "أربع كلمات عشوائية تصنع عبارة طويلة سهلة التذكر." } },
+        { "id": "w4", "difficulty": 2, "prompt": { "en": "Tr7#kq", "ar": "Tr7#kq" }, "options": [{ "en": "Weak", "ar": "ضعيفة" }, { "en": "Medium", "ar": "متوسطة" }, { "en": "Strong", "ar": "قوية" }], "answer": 1, "why": { "en": "Random but only 6 characters. Length matters more than symbols.", "ar": "عشوائية لكنها ٦ خانات فقط. الطول أهم من الرموز." } },
+        { "id": "w5", "difficulty": 3, "prompt": { "en": "Ahmed1985Ahmed1985", "ar": "Ahmed1985Ahmed1985" }, "options": [{ "en": "Weak", "ar": "ضعيفة" }, { "en": "Medium", "ar": "متوسطة" }, { "en": "Strong", "ar": "قوية" }], "answer": 0, "why": { "en": "Long, but name and birth year repeated. Personal info is guessable.", "ar": "طويلة لكنها اسم وسنة ميلاد مكرران. المعلومات الشخصية سهلة التخمين." } },
+        { "id": "w6", "difficulty": 3, "prompt": { "en": "9vQ!m2Lr#8zT@4pW", "ar": "9vQ!m2Lr#8zT@4pW" }, "options": [{ "en": "Weak", "ar": "ضعيفة" }, { "en": "Medium", "ar": "متوسطة" }, { "en": "Strong", "ar": "قوية" }], "answer": 2, "why": { "en": "16 random characters. Keep it in a password manager.", "ar": "١٦ خانة عشوائية. احفظها في مدير كلمات المرور." } }
+      ]
+    },
+    "social": {
+      "title": { "en": "Social Engineer", "ar": "الهندسة الاجتماعية" },
+      "intro": { "en": "Someone is asking for something. Choose the safe reply.", "ar": "أحدهم يطلب شيئاً. اختر الرد الآمن." },
+      "timeLimitMs": 15000,
+      "questions": [
+        { "id": "s1", "difficulty": 1, "prompt": { "en": "WhatsApp from \"your CEO\" on a new number: \"I'm in a meeting. Buy 5 gift cards now and send me the codes.\"", "ar": "واتساب من \"الرئيس التنفيذي\" برقم جديد: \"أنا في اجتماع. اشترِ ٥ بطاقات هدايا الآن وأرسل لي الأكواد.\"" }, "options": [{ "en": "Buy them quickly", "ar": "أشتريها بسرعة" }, { "en": "Call the CEO's known number to verify", "ar": "أتصل برقم الرئيس المعروف للتحقق" }, { "en": "Reply asking why", "ar": "أرد وأسأل عن السبب" }], "answer": 1, "why": { "en": "Verify through a channel you already trust, never the one that contacted you.", "ar": "تحقّق عبر قناة تثق بها مسبقاً، وليس القناة التي تواصلت معك." } },
+        { "id": "s2", "difficulty": 1, "prompt": { "en": "A caller says he is from IT and needs the 6-digit code just sent to your phone.", "ar": "متصل يقول إنه من تقنية المعلومات ويحتاج الرمز المكوّن من ٦ أرقام الذي وصلك الآن." }, "options": [{ "en": "Read him the code", "ar": "أقرأ له الرمز" }, { "en": "Refuse and report to IT", "ar": "أرفض وأبلغ تقنية المعلومات" }, { "en": "Send it by email instead", "ar": "أرسله بالبريد بدلاً من ذلك" }], "answer": 1, "why": { "en": "Real IT never needs your one-time code.", "ar": "فريق تقنية المعلومات الحقيقي لا يحتاج رمزك المؤقت أبداً." } },
+        { "id": "s3", "difficulty": 2, "prompt": { "en": "A visitor carrying boxes asks you to hold the secure door open.", "ar": "زائر يحمل صناديق يطلب منك إبقاء الباب المؤمَّن مفتوحاً." }, "options": [{ "en": "Hold the door", "ar": "أمسك الباب" }, { "en": "Offer to call reception to badge them in", "ar": "أعرض الاتصال بالاستقبال لإدخاله ببطاقة" }, { "en": "Ignore them", "ar": "أتجاهله" }], "answer": 1, "why": { "en": "Polite and safe: help, but through the proper entry.", "ar": "لطيف وآمن: ساعده، لكن عبر الدخول الصحيح." } },
+        { "id": "s4", "difficulty": 2, "prompt": { "en": "A supplier emails: \"We changed banks. Please pay this month's invoice to the new account.\"", "ar": "مورّد يرسل: \"غيّرنا البنك. يرجى دفع فاتورة هذا الشهر للحساب الجديد.\"" }, "options": [{ "en": "Update the account and pay", "ar": "أحدّث الحساب وأدفع" }, { "en": "Confirm by phone using the number on file", "ar": "أتأكد هاتفياً من الرقم المسجّل لدينا" }, { "en": "Reply to the email to confirm", "ar": "أرد على الرسالة للتأكيد" }], "answer": 1, "why": { "en": "Bank-change requests are the top payment fraud. Replying reaches the attacker.", "ar": "طلبات تغيير الحساب البنكي أشهر أساليب الاحتيال. الرد يصل للمهاجم نفسه." } },
+        { "id": "s5", "difficulty": 3, "prompt": { "en": "LinkedIn recruiter offers a great job and asks you to open a \"skills test\" file on your work laptop.", "ar": "مسؤول توظيف على لينكدإن يعرض وظيفة ممتازة ويطلب فتح ملف \"اختبار مهارات\" على جهاز العمل." }, "options": [{ "en": "Open it on the work laptop", "ar": "أفتحه على جهاز العمل" }, { "en": "Decline to run files on work devices", "ar": "أرفض تشغيل ملفات على أجهزة العمل" }, { "en": "Forward it to a colleague", "ar": "أحوّله لزميل" }], "answer": 1, "why": { "en": "Fake job tests are a known way into company networks.", "ar": "اختبارات التوظيف المزيفة طريق معروف لاختراق شبكات الشركات." } },
+        { "id": "s6", "difficulty": 3, "prompt": { "en": "You find a USB stick labelled \"Salaries 2026\" in the car park.", "ar": "وجدت ذاكرة USB مكتوب عليها \"رواتب ٢٠٢٦\" في موقف السيارات." }, "options": [{ "en": "Plug it in to find the owner", "ar": "أوصلها لمعرفة صاحبها" }, { "en": "Hand it to IT security unopened", "ar": "أسلّمها لأمن المعلومات دون فتحها" }, { "en": "Throw it away", "ar": "أرميها" }], "answer": 1, "why": { "en": "Baited drives are planted to be plugged in. Let security handle it.", "ar": "الذواكر المفخخة تُترك ليتم توصيلها. دع فريق الأمن يتعامل معها." } }
+      ]
+    }
+  }
+}

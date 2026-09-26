@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CITADEL</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button class="lang" id="lang" type="button">العربية</button>
+<main>
+  <section class="screen attract on" id="s-attract">
+    <div class="row"><span class="pulse"></span><span class="label" data-t="alert"></span></div>
+    <h1 data-t="attractTitle"></h1>
+    <p class="sub" data-t="attractSub"></p>
+    <button class="primary" id="go" type="button"><span data-t="start"></span></button>
+    <div class="panel"><div class="label" data-t="todayTop"></div><ol class="board" id="mini-board"></ol></div>
+  </section>
+
+  <section class="screen" id="s-identify">
+    <span class="label" data-t="step1"></span>
+    <h2 data-t="identifyTitle"></h2>
+    <form id="f-identify" class="panel" novalidate style="display:grid;gap:16px">
+      <label class="field"><span data-t="name"></span><input name="name" autocomplete="off" maxlength="60" required></label>
+      <label class="field"><span data-t="mobile"></span><input name="mobile" inputmode="tel" autocomplete="off" maxlength="20" required></label>
+      <label class="check"><input type="checkbox" name="consentGame"><span data-t="consentGame"></span></label>
+      <label class="check"><input type="checkbox" name="consentMarketing"><span data-t="consentMarketing"></span></label>
+      <p class="error" id="identify-err" role="alert"></p>
+      <div class="row"><button type="button" data-back><span data-t="back"></span></button><button class="primary" type="submit"><span data-t="continue"></span></button></div>
+    </form>
+  </section>
+
+  <section class="screen" id="s-modes">
+    <span class="label" data-t="step2"></span>
+    <h2 data-t="chooseMission"></h2>
+    <div class="grid" id="modes"></div>
+    <p class="error" id="modes-err" role="alert"></p>
+    <button type="button" data-finish><span data-t="finish"></span></button>
+  </section>
+
+  <section class="screen" id="s-play">
+    <div class="hud"><span id="play-title"></span><span id="play-count"></span><span id="play-score">0</span></div>
+    <div class="timer" id="timer"><i></i></div>
+    <div class="panel prompt" id="prompt" aria-live="polite"></div>
+    <div class="grid" id="options"></div>
+    <div class="feedback" id="feedback" hidden></div>
+  </section>
+
+  <section class="screen" id="s-result">
+    <span class="label" data-t="missionComplete"></span>
+    <div class="big" id="res-score">0</div>
+    <p class="sub" id="res-line"></p>
+    <div class="row">
+      <button class="primary" type="button" data-again><span data-t="another"></span></button>
+      <button type="button" data-finish><span data-t="finish"></span></button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-profile">
+    <span class="label" data-t="certificate"></span>
+    <h2 data-t="profileTitle"></h2>
+    <form id="f-profile" class="panel" novalidate style="display:grid;gap:16px">
+      <label class="field"><span data-t="email"></span><input name="email" type="email" inputmode="email" autocomplete="off" maxlength="120"></label>
+      <label class="field"><span data-t="company"></span><input name="company" autocomplete="off" maxlength="80"></label>
+      <label class="field"><span data-t="jobTitle"></span><input name="jobTitle" autocomplete="off" maxlength="80"></label>
+      <p class="error" id="profile-err" role="alert"></p>
+      <div class="row"><button type="button" data-skip><span data-t="skip"></span></button><button class="primary" type="submit"><span data-t="getCert"></span></button></div>
+    </form>
+  </section>
+
+  <section class="screen" id="s-done">
+    <span class="label" data-t="thanks"></span>
+    <h1 data-t="doneTitle"></h1>
+    <p class="sub" id="done-line"></p>
+    <div class="panel"><ol class="board" id="done-board"></ol></div>
+  </section>
+</main>
+<div class="credit">FX-8802 CITADEL · Joby Thuruthel | FAIM</div>
+<script src="app.js"></script>
+</body>
+</html>
