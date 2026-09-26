@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CORTEX Staff</title>
+<link rel="stylesheet" href="style.css">
+<style>body{overflow:auto;user-select:text}main{align-items:start}.stat{font:700 36px var(--mono);color:var(--green-hi)}td,th{padding:8px 12px;text-align:start;border-bottom:1px solid var(--line);vertical-align:top}table{border-collapse:collapse;width:100%;font-size:15px}#panel:not([hidden]){display:grid;gap:24px}td button{min-height:40px;font-size:14px;padding:0 12px}.alert{border-color:var(--red)}textarea{width:100%;min-height:90px;font:var(--body) var(--sans);color:var(--ink);background:rgba(242,245,240,.06);border:1px solid var(--line);border-radius:12px;padding:12px}select{min-height:56px;background:var(--void);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0 12px;font-size:16px}</style>
+</head>
+<body>
+<main><section class="screen on">
+  <span class="label">CORTEX · Staff console</span>
+  <form id="login" class="row"><input id="pin" type="password" placeholder="Staff PIN" style="max-width:240px"><button class="primary">Unlock</button></form>
+  <p class="error" id="err"></p>
+  <div id="panel" hidden>
+    <div class="grid" id="stats"></div>
+    <div class="panel" id="hand-wrap"><h2>Visitors asking for a person</h2><table><tbody id="handoffs"></tbody></table></div>
+    <div class="panel"><h2>Questions CORTEX could not answer</h2><p class="sub">Each one is a gap in the approved information. Tap "Answer" to fill it.</p><table><thead><tr><th>Question</th><th>Lang</th><th>Times</th><th></th></tr></thead><tbody id="unanswered"></tbody></table></div>
+    <form class="panel" id="add" style="display:grid;gap:12px">
+      <h2>Add an approved answer</h2>
+      <label class="field">Question visitors ask<input name="question" maxlength="200"></label>
+      <label class="field">Approved answer<textarea name="answer" maxlength="600"></textarea></label>
+      <div class="row"><select name="lang"><option value="en">English</option><option value="ar">العربية</option></select><input name="source" placeholder="Source (e.g. Organiser, 16 Oct)" style="max-width:320px"><button class="primary">Save answer</button></div>
+    </form>
+    <div class="panel"><h2>Answers added by staff</h2><table><tbody id="entries"></tbody></table></div>
+  </div>
+</section></main>
+<script>
+let pin = '', seen = new Set();
+const $ = s => document.querySelector(s);
+const call = (p, body) => fetch(p, { method: body ? 'POST' : 'GET', headers: { 'x-admin-pin': pin, 'content-type': 'application/json' }, body: body && JSON.stringify(body) })
+  .then(async r => { const d = await r.json(); if (!r.ok) throw new Error(r.status === 403 ? 'Wrong PIN' : d.error); return d; });
+const td = v => { const c = document.createElement('td'); if (v instanceof Node) c.append(v); else c.textContent = v ?? ''; return c; };
+const btn = (label, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.onclick = fn; return b; };
+function chime() { try { const a = new AudioContext(), o = a.createOscillator(); o.frequency.value = 880; o.connect(a.destination); o.start(); o.stop(a.currentTime + .25); } catch {} }
+async function load() {
+  const [s, h, u, e] = await Promise.all([call('/api/admin/stats'), call('/api/admin/handoffs'), call('/api/admin/unanswered'), call('/api/admin/entries')]);
+  const tiles = [['Questions', s.questions], ['Answered', s.answerRate === null ? 'n/a' : s.answerRate + '%'], ['By voice', s.voice], ['Waiting for staff', s.handoffsOpen]];
+  $('#stats').replaceChildren(...tiles.map(([k, v]) => { const d = document.createElement('div'); d.className = 'panel'; d.innerHTML = '<div class="label"></div><div class="stat"></div>'; d.children[0].textContent = k; d.children[1].textContent = v; return d; }));
+  if (h.some(x => !seen.has(x.id))) chime();
+  seen = new Set(h.map(x => x.id));
+  $('#hand-wrap').classList.toggle('alert', h.length > 0);
+  $('#handoffs').replaceChildren(...(h.length ? h.map(x => { const tr = document.createElement('tr'); tr.append(td(new Date(x.at).toLocaleTimeString()), td(x.question || '(no question)'), td(x.lang), td(btn('Done', async () => { await call('/api/admin/resolve', { id: x.id }); load(); }))); return tr; }) : [(() => { const tr = document.createElement('tr'); tr.append(td('Nobody waiting.')); return tr; })()]));
+  $('#unanswered').replaceChildren(...u.map(x => { const tr = document.createElement('tr'); tr.append(td(x.text), td(x.lang), td(x.times), td(btn('Answer', () => { $('#add').question.value = x.text; $('#add').lang.value = x.lang; $('#add').answer.focus(); }))); return tr; }));
+  $('#entries').replaceChildren(...e.map(x => { const tr = document.createElement('tr'); tr.append(td(x.question), td(x.answer), td(x.lang), td(btn('Remove', async () => { if (confirm('Remove this answer?')) { await call('/api/admin/entries/delete', { id: x.id }); load(); } }))); return tr; }));
+  $('#panel').hidden = false; $('#err').textContent = '';
+}
+$('#login').onsubmit = ev => { ev.preventDefault(); pin = $('#pin').value; load().catch(x => { $('#err').textContent = x.message; }); };
+$('#add').onsubmit = async ev => {
+  ev.preventDefault(); const f = ev.target;
+  try { await call('/api/admin/entries', { question: f.question.value, answer: f.answer.value, lang: f.lang.value, source: f.source.value }); f.reset(); $('#err').textContent = 'Saved. CORTEX answers it from now on.'; load(); }
+  catch (x) { $('#err').textContent = 'Could not save: ' + x.message; }
+};
+setInterval(() => { if (pin) load().catch(() => {}); }, 5000);
+</script>
+</body>
+</html>

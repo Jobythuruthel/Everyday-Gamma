@@ -1,0 +1,573 @@
+{
+  "_note": "DEMO knowledge base for a fictional event. Replace every entry with the client's approved event facts before use.",
+  "event": {
+    "en": "FAIM Demo Summit 2026",
+    "ar": "قمة فايم التجريبية ٢٠٢٦"
+  },
+  "entries": [
+    {
+      "id": "keynote",
+      "source": "Agenda v3",
+      "q": {
+        "en": [
+          "When is the keynote?",
+          "What time does the opening keynote start?",
+          "Where is the keynote session?",
+          "keynote location"
+        ],
+        "ar": [
+          "متى الكلمة الرئيسية؟",
+          "في أي ساعة تبدأ الكلمة الافتتاحية؟",
+          "أين تقام الكلمة الرئيسية؟"
+        ]
+      },
+      "a": {
+        "en": "The opening keynote starts at 10:00 in Main Hall A, ground floor.",
+        "ar": "تبدأ الكلمة الافتتاحية الساعة ١٠:٠٠ في القاعة الرئيسية A، الطابق الأرضي."
+      },
+      "keywords": {
+        "en": [
+          "opening speech"
+        ],
+        "ar": [
+          "الكلمه الافتتاحيه"
+        ]
+      }
+    },
+    {
+      "id": "registration",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "Where do I register?",
+          "Where is the registration desk?",
+          "Where can I collect my badge?",
+          "check in desk"
+        ],
+        "ar": [
+          "أين أسجل؟",
+          "أين مكتب التسجيل؟",
+          "أين أستلم بطاقتي؟"
+        ]
+      },
+      "a": {
+        "en": "Registration and badge collection are at the North Entrance, open from 08:00.",
+        "ar": "التسجيل واستلام البطاقات عند المدخل الشمالي، ويفتح من الساعة ٨:٠٠."
+      },
+      "keywords": {
+        "en": [
+          "badge pickup"
+        ],
+        "ar": [
+          "استلام البطاقة",
+          "التسجيل"
+        ]
+      }
+    },
+    {
+      "id": "wifi",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "What is the wifi password?",
+          "How do I connect to the internet?",
+          "Is there free wifi?",
+          "wifi network name"
+        ],
+        "ar": [
+          "ما كلمة مرور الواي فاي؟",
+          "كيف أتصل بالإنترنت؟",
+          "هل يوجد واي فاي مجاني؟"
+        ]
+      },
+      "a": {
+        "en": "Join the network \"Summit-Guest\". No password is needed; accept the terms page.",
+        "ar": "اتصل بشبكة \"Summit-Guest\". لا حاجة لكلمة مرور؛ وافق على صفحة الشروط."
+      },
+      "keywords": {
+        "en": [
+          "internet connection"
+        ],
+        "ar": [
+          "واي فاي",
+          "انترنت",
+          "الشبكة"
+        ]
+      }
+    },
+    {
+      "id": "prayer",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "Where is the prayer room?",
+          "Is there a place to pray?",
+          "mosque nearby",
+          "prayer area for women"
+        ],
+        "ar": [
+          "أين غرفة الصلاة؟",
+          "هل يوجد مكان للصلاة؟",
+          "مصلى النساء"
+        ]
+      },
+      "a": {
+        "en": "Prayer rooms for men and women are on level 1, next to Hall C. Ablution areas are beside each room.",
+        "ar": "مصليات الرجال والنساء في الطابق الأول بجوار القاعة C، ومواضئ بجانب كل مصلى."
+      },
+      "keywords": {
+        "en": [
+          "pray",
+          "praying"
+        ],
+        "ar": [
+          "مصلى",
+          "اصلي",
+          "الصلاة"
+        ]
+      }
+    },
+    {
+      "id": "restroom",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "Where are the toilets?",
+          "Where is the restroom?",
+          "nearest bathroom"
+        ],
+        "ar": [
+          "أين دورات المياه؟",
+          "أين الحمام؟",
+          "أقرب دورة مياه"
+        ]
+      },
+      "a": {
+        "en": "Restrooms are at both ends of every hall, and beside the food court.",
+        "ar": "دورات المياه في طرفي كل قاعة، وبجانب منطقة المطاعم."
+      },
+      "keywords": {
+        "en": [
+          "toilet",
+          "washroom",
+          "wc"
+        ],
+        "ar": [
+          "حمام",
+          "الحمامات",
+          "دورة مياه"
+        ]
+      }
+    },
+    {
+      "id": "food",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "Where can I get food?",
+          "Where is lunch served?",
+          "Is there a cafe?",
+          "coffee"
+        ],
+        "ar": [
+          "أين أجد الطعام؟",
+          "أين يقدم الغداء؟",
+          "هل يوجد مقهى؟",
+          "قهوة"
+        ]
+      },
+      "a": {
+        "en": "The food court is on level 1. Lunch is served from 12:30 to 14:00. Coffee stations are in every hall.",
+        "ar": "منطقة المطاعم في الطابق الأول. يقدم الغداء من ١٢:٣٠ إلى ١٤:٠٠. محطات القهوة في كل قاعة."
+      },
+      "keywords": {
+        "en": [
+          "eat",
+          "eating",
+          "hungry",
+          "restaurant"
+        ],
+        "ar": [
+          "مطعم",
+          "اكل",
+          "جوعان"
+        ]
+      }
+    },
+    {
+      "id": "parking",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "Where can I park?",
+          "Is parking free?",
+          "car park location",
+          "valet parking"
+        ],
+        "ar": [
+          "أين أوقف سيارتي؟",
+          "هل المواقف مجانية؟",
+          "موقف السيارات",
+          "خدمة صف السيارات"
+        ]
+      },
+      "a": {
+        "en": "Free parking is in Car Park P2, a 3-minute walk from the North Entrance. Valet is at the main drop-off.",
+        "ar": "المواقف المجانية في الموقف P2 على بعد ٣ دقائق سيراً من المدخل الشمالي. خدمة صف السيارات عند نقطة الإنزال الرئيسية."
+      },
+      "keywords": {
+        "en": [
+          "park",
+          "car"
+        ],
+        "ar": [
+          "مواقف",
+          "موقف",
+          "باركنق"
+        ]
+      }
+    },
+    {
+      "id": "firstaid",
+      "source": "Safety plan",
+      "q": {
+        "en": [
+          "Where is first aid?",
+          "I need a doctor",
+          "medical help",
+          "I feel sick"
+        ],
+        "ar": [
+          "أين الإسعافات الأولية؟",
+          "أحتاج طبيباً",
+          "مساعدة طبية",
+          "أشعر بتعب"
+        ]
+      },
+      "a": {
+        "en": "First aid is beside the North Entrance. For an emergency, tell any staff member in a green lanyard now.",
+        "ar": "الإسعافات الأولية بجوار المدخل الشمالي. في حالة الطوارئ، أبلغ فوراً أي موظف يرتدي شريطاً أخضر."
+      },
+      "keywords": {
+        "en": [
+          "medic",
+          "injury",
+          "ambulance"
+        ],
+        "ar": [
+          "اسعاف",
+          "طبيب",
+          "مستوصف"
+        ]
+      }
+    },
+    {
+      "id": "lost",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "I lost my phone",
+          "Where is lost and found?",
+          "I found a wallet"
+        ],
+        "ar": [
+          "فقدت هاتفي",
+          "أين المفقودات؟",
+          "وجدت محفظة"
+        ]
+      },
+      "a": {
+        "en": "Lost and found is at the Information Desk in the main lobby.",
+        "ar": "المفقودات في مكتب الاستعلامات في الردهة الرئيسية."
+      },
+      "keywords": {
+        "en": [
+          "lost property",
+          "wallet",
+          "keys"
+        ],
+        "ar": [
+          "محفظتي",
+          "ضاع",
+          "فقدت"
+        ]
+      }
+    },
+    {
+      "id": "closing",
+      "source": "Agenda v3",
+      "q": {
+        "en": [
+          "What time does the event close?",
+          "When does it end today?",
+          "opening hours"
+        ],
+        "ar": [
+          "متى تغلق الفعالية؟",
+          "متى تنتهي اليوم؟",
+          "ساعات العمل"
+        ]
+      },
+      "a": {
+        "en": "The exhibition is open 09:00 to 18:00 each day. The last session ends at 17:30.",
+        "ar": "المعرض مفتوح من ٩:٠٠ إلى ١٨:٠٠ يومياً. تنتهي آخر جلسة الساعة ١٧:٣٠."
+      },
+      "keywords": {
+        "en": [
+          "close",
+          "closes",
+          "closing time"
+        ],
+        "ar": [
+          "يغلق",
+          "يسكر",
+          "اوقات الدوام"
+        ]
+      }
+    },
+    {
+      "id": "workshops",
+      "source": "Agenda v3",
+      "q": {
+        "en": [
+          "How do I join a workshop?",
+          "Do I need to book workshops?",
+          "workshop sign up"
+        ],
+        "ar": [
+          "كيف أنضم إلى ورشة عمل؟",
+          "هل أحتاج لحجز الورش؟",
+          "التسجيل في الورش"
+        ]
+      },
+      "a": {
+        "en": "Workshops are first come, first served. Scan the QR code at the workshop room door 15 minutes before it starts.",
+        "ar": "الورش بأولوية الحضور. امسح رمز QR عند باب قاعة الورشة قبل بدايتها بـ ١٥ دقيقة."
+      },
+      "keywords": {
+        "en": [
+          "book",
+          "booking",
+          "reserve"
+        ],
+        "ar": [
+          "احجز",
+          "حجز",
+          "ورشة"
+        ]
+      }
+    },
+    {
+      "id": "badge_lost",
+      "source": "Registration policy",
+      "q": {
+        "en": [
+          "I lost my badge",
+          "Can I get a new badge?",
+          "replace my badge"
+        ],
+        "ar": [
+          "فقدت بطاقتي",
+          "هل يمكنني الحصول على بطاقة جديدة؟",
+          "استبدال البطاقة"
+        ]
+      },
+      "a": {
+        "en": "Go to the Registration desk at the North Entrance with photo ID and we will reprint your badge.",
+        "ar": "توجه إلى مكتب التسجيل عند المدخل الشمالي مع هوية بصورة وسنعيد طباعة بطاقتك."
+      },
+      "keywords": {
+        "en": [
+          "badge lost",
+          "new badge"
+        ],
+        "ar": [
+          "ضاعت بطاقتي",
+          "بطاقة بديلة"
+        ]
+      }
+    },
+    {
+      "id": "taxi",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "How do I get a taxi?",
+          "Where is the taxi stand?",
+          "Uber pickup point",
+          "ride pickup"
+        ],
+        "ar": [
+          "كيف أطلب سيارة أجرة؟",
+          "أين موقف التاكسي؟",
+          "نقطة التقاط أوبر"
+        ]
+      },
+      "a": {
+        "en": "The taxi rank and ride-hailing pickup point are outside the South Entrance.",
+        "ar": "موقف سيارات الأجرة ونقطة التقاط تطبيقات التوصيل خارج المدخل الجنوبي."
+      },
+      "keywords": {
+        "en": [
+          "cab",
+          "careem"
+        ],
+        "ar": [
+          "تكسي",
+          "كريم",
+          "اوبر"
+        ]
+      }
+    },
+    {
+      "id": "accessibility",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "Is there wheelchair access?",
+          "Where are the elevators?",
+          "accessible entrance"
+        ],
+        "ar": [
+          "هل يوجد مدخل للكراسي المتحركة؟",
+          "أين المصاعد؟",
+          "مدخل لذوي الإعاقة"
+        ]
+      },
+      "a": {
+        "en": "All halls are step-free. Lifts are beside the North and South entrances. Wheelchairs can be borrowed at the Information Desk.",
+        "ar": "جميع القاعات بدون درجات. المصاعد بجوار المدخلين الشمالي والجنوبي. يمكن استعارة كرسي متحرك من مكتب الاستعلامات."
+      },
+      "keywords": {
+        "en": [
+          "lift",
+          "disabled"
+        ],
+        "ar": [
+          "مصعد",
+          "كرسي متحرك"
+        ]
+      }
+    },
+    {
+      "id": "halls",
+      "source": "Floor plan v2",
+      "q": {
+        "en": [
+          "Where is Hall C?",
+          "Where is Hall B?",
+          "map of the halls",
+          "floor plan"
+        ],
+        "ar": [
+          "أين القاعة C؟",
+          "أين القاعة B؟",
+          "خريطة القاعات",
+          "مخطط الطوابق"
+        ]
+      },
+      "a": {
+        "en": "Halls A and B are on the ground floor, Halls C and D on level 1. Maps are posted at every escalator.",
+        "ar": "القاعتان A و B في الطابق الأرضي، والقاعتان C و D في الطابق الأول. الخرائط معلقة عند كل سلم متحرك."
+      },
+      "keywords": {
+        "en": [
+          "map",
+          "hall"
+        ],
+        "ar": [
+          "خريطة",
+          "القاعات"
+        ]
+      }
+    },
+    {
+      "id": "certificate",
+      "source": "Organiser FAQ",
+      "q": {
+        "en": [
+          "Will I get a certificate?",
+          "certificate of attendance",
+          "CPD hours"
+        ],
+        "ar": [
+          "هل سأحصل على شهادة؟",
+          "شهادة حضور",
+          "ساعات التطوير المهني"
+        ]
+      },
+      "a": {
+        "en": "Certificates of attendance are emailed within 5 working days to the address you registered with.",
+        "ar": "ترسل شهادات الحضور خلال ٥ أيام عمل إلى البريد الذي سجلت به."
+      },
+      "keywords": {
+        "en": [
+          "certification"
+        ],
+        "ar": [
+          "شهادة"
+        ]
+      }
+    },
+    {
+      "id": "charging",
+      "source": "Venue guide",
+      "q": {
+        "en": [
+          "Where can I charge my phone?",
+          "phone charging station",
+          "power socket"
+        ],
+        "ar": [
+          "أين أشحن هاتفي؟",
+          "محطة شحن الهاتف",
+          "مقبس كهرباء"
+        ]
+      },
+      "a": {
+        "en": "Free charging lockers are in the main lobby beside the Information Desk.",
+        "ar": "خزائن الشحن المجانية في الردهة الرئيسية بجوار مكتب الاستعلامات."
+      },
+      "keywords": {
+        "en": [
+          "charger",
+          "battery"
+        ],
+        "ar": [
+          "جوال",
+          "شاحن",
+          "بطارية"
+        ]
+      }
+    },
+    {
+      "id": "smoking",
+      "source": "Venue rules",
+      "q": {
+        "en": [
+          "Where can I smoke?",
+          "smoking area",
+          "vape zone"
+        ],
+        "ar": [
+          "أين يمكنني التدخين؟",
+          "منطقة التدخين"
+        ]
+      },
+      "a": {
+        "en": "Smoking and vaping are allowed only in the outdoor area beside the South Entrance.",
+        "ar": "التدخين مسموح فقط في المنطقة الخارجية بجوار المدخل الجنوبي."
+      },
+      "keywords": {
+        "en": [
+          "cigarette",
+          "smoke"
+        ],
+        "ar": [
+          "دخان",
+          "تدخين"
+        ]
+      }
+    }
+  ]
+}
