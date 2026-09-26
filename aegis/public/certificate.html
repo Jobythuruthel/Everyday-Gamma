@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safety Certificate</title>
+<style>
+:root{--void:#040705;--ink:#F2F5F0;--green:#6FBD44}
+@page{size:A4 landscape;margin:0}
+body{margin:0;background:var(--void);color:var(--ink);font:18px Arial,sans-serif;display:grid;place-items:center;min-height:100vh}
+.cert{width:min(1000px,94vw);aspect-ratio:1.414;border:2px solid var(--green);border-radius:20px;padding:6%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between}
+.label{font:12px "Courier New",monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--green)}
+h1{font-size:clamp(36px,6vw,72px);margin:.2em 0}
+.score{font:700 40px "Courier New",monospace;color:var(--green)}
+@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="cert">
+  <div><div class="label"><span id="kind">FX-1190 AEGIS · Safety Controller</span></div><h1 id="name">…</h1><p><span id="what"></span></p></div>
+  <div><div class="label">Total score</div><div class="score" id="score"></div></div>
+  <div class="label" id="date"></div>
+</div>
+<script>
+const id = new URLSearchParams(location.search).get('visitorId');
+fetch('/api/certificate?visitorId=' + encodeURIComponent(id)).then(r => r.json()).then(c => {
+  if (c.error) { document.getElementById('name').textContent = 'Certificate not found'; return; }
+  document.getElementById('name').textContent = c.name;
+  document.getElementById('score').textContent = c.total;
+  const names = { hazard: 'Hazard Hunt', loto: 'Lockout-Tagout', ppe: 'PPE Loadout', reaction: 'Emergency Reaction' };
+  document.getElementById('kind').textContent = c.complete ? 'FX-1190 AEGIS · Certified Safety Controller' : 'FX-1190 AEGIS · Safety Drill Record';
+  document.getElementById('what').textContent = (c.employeeNo ? 'Employee ' + c.employeeNo + ' · ' : '') + 'completed ' + c.modules.map(m => names[m.module]).join(', ') + '.';
+  document.getElementById('date').textContent = new Date(c.issuedAt).toDateString() + ' · Joby Thuruthel | FAIM';
+  setTimeout(() => print(), 400);
+});
+</script>
+</body>
+</html>

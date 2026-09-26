@@ -1,0 +1,5 @@
+name,company,email,mobile,category,code,host_name,host_contact
+Sara Al-Mansoori,Gulf Energy Co,sara@example.com,+97333001122,VIP,VIP0001,Joby T.,joby@example.com
+Omar Khalid,Steelworks BH,omar@example.com,+97333112233,ATTENDEE,ATT0002,,
+Layla Haddad,"Haddad, Partners & Co",layla@example.com,+966500112233,SPEAKER,SPK0003,,
+Test Name_With^Caret~,Zebra Test Ltd,zebra@example.com,+97333999999,EXHIBITOR,EXH0004,,

@@ -1,0 +1,65 @@
+{
+  "_note": "DRAFT content. Must be reviewed and approved by the client HSE team before any event.",
+  "hazard": {
+    "timeLimitMs": 30000,
+    "scenes": [
+      {
+        "id": "steel", "title": { "en": "Steel mill floor", "ar": "أرضية مصنع الصلب" },
+        "elements": [
+          { "id": "e1", "kind": "worker", "variant": "nohelmet", "x": 18, "y": 62, "hazard": true, "severity": 3, "label": { "en": "Worker without a hard hat", "ar": "عامل بدون خوذة" } },
+          { "id": "e2", "kind": "worker", "variant": "helmet", "x": 70, "y": 64, "hazard": false },
+          { "id": "e3", "kind": "platform", "variant": "norail", "x": 44, "y": 26, "hazard": true, "severity": 3, "label": { "en": "Platform edge with no guardrail", "ar": "حافة منصة بدون حاجز" } },
+          { "id": "e4", "kind": "floor", "variant": "spill", "x": 36, "y": 80, "hazard": true, "severity": 2, "label": { "en": "Oil spill on the walkway", "ar": "انسكاب زيت على الممر" } },
+          { "id": "e5", "kind": "exit", "variant": "blocked", "x": 88, "y": 40, "hazard": true, "severity": 3, "label": { "en": "Emergency exit blocked", "ar": "مخرج الطوارئ مسدود" } },
+          { "id": "e6", "kind": "cable", "variant": "loose", "x": 58, "y": 84, "hazard": true, "severity": 2, "label": { "en": "Loose cable across the walkway", "ar": "كابل مفكوك عبر الممر" } },
+          { "id": "e7", "kind": "cylinder", "variant": "chained", "x": 8, "y": 36, "hazard": false },
+          { "id": "e8", "kind": "extinguisher", "variant": "ok", "x": 78, "y": 22, "hazard": false }
+        ]
+      },
+      {
+        "id": "oilgas", "title": { "en": "Gas processing unit", "ar": "وحدة معالجة الغاز" },
+        "elements": [
+          { "id": "g1", "kind": "cylinder", "variant": "unchained", "x": 12, "y": 58, "hazard": true, "severity": 3, "label": { "en": "Gas cylinder not secured", "ar": "أسطوانة غاز غير مثبتة" } },
+          { "id": "g2", "kind": "worker", "variant": "helmet", "x": 30, "y": 64, "hazard": false },
+          { "id": "g3", "kind": "flame", "variant": "open", "x": 50, "y": 58, "hazard": true, "severity": 3, "label": { "en": "Open flame near process area", "ar": "لهب مكشوف قرب منطقة التشغيل" } },
+          { "id": "g4", "kind": "platform", "variant": "rail", "x": 66, "y": 24, "hazard": false },
+          { "id": "g5", "kind": "worker", "variant": "nohelmet", "x": 82, "y": 66, "hazard": true, "severity": 3, "label": { "en": "Worker without a hard hat", "ar": "عامل بدون خوذة" } },
+          { "id": "g6", "kind": "floor", "variant": "spill", "x": 64, "y": 84, "hazard": true, "severity": 2, "label": { "en": "Chemical spill not contained", "ar": "انسكاب كيميائي غير محتوى" } },
+          { "id": "g7", "kind": "exit", "variant": "clear", "x": 92, "y": 38, "hazard": false },
+          { "id": "g8", "kind": "extinguisher", "variant": "missing", "x": 26, "y": 24, "hazard": true, "severity": 2, "label": { "en": "Fire extinguisher missing", "ar": "طفاية الحريق مفقودة" } }
+        ]
+      }
+    ]
+  },
+  "loto": {
+    "timeLimitMs": 45000,
+    "steps": [
+      { "id": "notify", "label": { "en": "Notify affected workers", "ar": "إبلاغ العمال المعنيين" } },
+      { "id": "shutdown", "label": { "en": "Shut down the machine", "ar": "إيقاف تشغيل الآلة" } },
+      { "id": "isolate", "label": { "en": "Isolate all energy sources", "ar": "عزل جميع مصادر الطاقة" } },
+      { "id": "lock", "label": { "en": "Apply your personal lock", "ar": "وضع قفلك الشخصي" } },
+      { "id": "tag", "label": { "en": "Attach the danger tag", "ar": "تعليق بطاقة الخطر" } },
+      { "id": "verify", "label": { "en": "Verify zero energy (try start)", "ar": "التحقق من انعدام الطاقة (محاولة التشغيل)" } }
+    ]
+  },
+  "ppe": {
+    "timeLimitMs": 40000,
+    "items": [
+      { "id": "helmet", "label": { "en": "Hard hat", "ar": "خوذة" } },
+      { "id": "glasses", "label": { "en": "Safety glasses", "ar": "نظارات السلامة" } },
+      { "id": "harness", "label": { "en": "Full-body harness", "ar": "حزام أمان كامل" } },
+      { "id": "gloves_chem", "label": { "en": "Chemical gloves", "ar": "قفازات كيميائية" } },
+      { "id": "respirator", "label": { "en": "Respirator", "ar": "كمامة تنفس" } },
+      { "id": "earmuffs", "label": { "en": "Ear protection", "ar": "واقي الأذن" } },
+      { "id": "boots", "label": { "en": "Safety boots", "ar": "حذاء السلامة" } },
+      { "id": "face_shield", "label": { "en": "Face shield", "ar": "واقي الوجه" } },
+      { "id": "tie", "label": { "en": "Necktie", "ar": "ربطة عنق" } }
+    ],
+    "tasks": [
+      { "id": "height", "label": { "en": "Welding at height on a scaffold", "ar": "لحام على سقالة مرتفعة" }, "required": ["helmet", "harness", "boots", "face_shield"] },
+      { "id": "chem", "label": { "en": "Transferring acid between drums", "ar": "نقل حمض بين البراميل" }, "required": ["glasses", "gloves_chem", "respirator", "boots", "face_shield"] },
+      { "id": "noise", "label": { "en": "Inspecting the rolling mill", "ar": "فحص وحدة الدرفلة" }, "required": ["helmet", "glasses", "earmuffs", "boots"] }
+    ]
+  },
+  "reaction": { "trials": 3, "minMs": 100, "maxMs": 2000 }
+}

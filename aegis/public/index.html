@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AEGIS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button class="lang" id="lang" type="button">العربية</button>
+<main>
+  <section class="screen attract on" id="s-attract">
+    <div class="row"><span class="pulse"></span><span class="label" data-t="alert"></span></div>
+    <h1 data-t="attractTitle"></h1>
+    <p class="sub" data-t="attractSub"></p>
+    <button class="primary" id="go" type="button"><span data-t="start"></span></button>
+    <div class="panel"><div class="label" data-t="todayTop"></div><ol class="board" id="mini-board"></ol></div>
+  </section>
+
+  <section class="screen" id="s-identify">
+    <span class="label" data-t="step1"></span>
+    <h2 data-t="identifyTitle"></h2>
+    <form id="f-identify" class="panel" novalidate style="display:grid;gap:16px">
+      <label class="field"><span data-t="name"></span><input name="name" autocomplete="off" maxlength="60"></label>
+      <label class="field"><span data-t="employeeNo"></span><input name="employeeNo" autocomplete="off" maxlength="30"></label>
+      <label class="field"><span data-t="department"></span><input name="department" autocomplete="off" maxlength="60"></label>
+      <p class="error" id="identify-err" role="alert"></p>
+      <div class="row"><button type="button" data-back><span data-t="back"></span></button><button class="primary" type="submit"><span data-t="continue"></span></button></div>
+    </form>
+  </section>
+
+  <section class="screen" id="s-modules">
+    <span class="label" data-t="step2"></span>
+    <h2 data-t="chooseDrill"></h2>
+    <div class="grid" id="modules"></div>
+    <p class="error" id="modules-err" role="alert"></p>
+    <button type="button" data-finish><span data-t="finish"></span></button>
+  </section>
+
+  <section class="screen" id="s-hazard">
+    <div class="hud"><span id="hz-title"></span><span id="hz-count"></span><span id="hz-time"></span></div>
+    <div class="timer"><i id="hz-bar"></i></div>
+    <div class="scene" id="scene"></div>
+    <div class="row"><p class="sub" data-t="hazardHelp" style="flex:1"></p><button class="primary" id="hz-done" type="button"><span data-t="done"></span></button></div>
+  </section>
+
+  <section class="screen" id="s-loto">
+    <div class="hud"><span data-t="lotoTitle"></span><span id="lt-time"></span></div>
+    <div class="timer"><i id="lt-bar"></i></div>
+    <p class="sub" data-t="lotoHelp"></p>
+    <div class="grid" style="grid-template-columns:1fr 1fr">
+      <div class="panel"><div class="label" data-t="steps"></div><div class="seq" id="lt-pool" style="counter-reset:none"></div></div>
+      <div class="panel"><div class="label" data-t="yourSequence"></div><div class="seq" id="lt-seq"></div></div>
+    </div>
+    <button class="primary" id="lt-done" type="button" disabled><span data-t="lockIt"></span></button>
+  </section>
+
+  <section class="screen" id="s-ppe">
+    <div class="hud"><span data-t="ppeTitle"></span><span id="pp-count"></span><span id="pp-time"></span></div>
+    <div class="timer"><i id="pp-bar"></i></div>
+    <h2 id="pp-task"></h2>
+    <p class="sub" data-t="ppeHelp"></p>
+    <div class="grid" id="pp-items" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))"></div>
+    <button class="primary" id="pp-next" type="button"><span data-t="next"></span></button>
+  </section>
+
+  <section class="screen" id="s-reaction">
+    <div class="hud"><span data-t="reactionTitle"></span><span id="rx-count"></span></div>
+    <div class="pad" id="pad" role="button" tabindex="0"></div>
+    <p class="sub" data-t="reactionHelp"></p>
+  </section>
+
+  <section class="screen" id="s-result">
+    <span class="label" data-t="drillComplete"></span>
+    <div class="big" id="res-score">0</div>
+    <p class="sub" id="res-line"></p>
+    <div class="panel" id="res-fb-wrap"><div class="label" id="res-fb-title"></div><ul class="fb" id="res-fb"></ul></div>
+    <div class="row">
+      <button class="primary" type="button" data-again><span data-t="another"></span></button>
+      <button type="button" data-finish><span data-t="finish"></span></button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-done">
+    <span class="label" data-t="thanks"></span>
+    <h1 id="done-title"></h1>
+    <p class="sub" id="done-line"></p>
+    <div class="panel"><ol class="board" id="done-board"></ol></div>
+  </section>
+</main>
+<div class="credit">FX-1190 AEGIS · Joby Thuruthel | FAIM</div>
+<script src="scene.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

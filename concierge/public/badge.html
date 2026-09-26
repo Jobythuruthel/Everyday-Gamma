@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<title>Badge</title>
+<style>
+@page { size: 4in 3in; margin: 0; }
+body { margin: 0; background: #fff; color: #040705; font-family: Arial, sans-serif; }
+.badge { width: 4in; height: 3in; box-sizing: border-box; padding: .22in; display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr auto; gap: .08in; }
+.cat { grid-column: 1 / -1; font: 700 12pt "Courier New", monospace; letter-spacing: .18em; }
+.who { align-self: center; }
+.name { font-size: 26pt; font-weight: 700; line-height: 1.05; }
+.co { font-size: 13pt; margin-top: .08in; }
+#qr { align-self: end; width: 1.1in; height: 1.1in; }
+#qr svg { width: 100%; height: 100%; }
+.foot { grid-column: 1 / -1; font: 8pt "Courier New", monospace; color: #555; }
+</style>
+</head>
+<body>
+<div class="badge"><div class="cat" id="cat"></div><div class="who"><div class="name" id="name"></div><div class="co" id="co"></div></div><div id="qr"></div><div class="foot">F-8091 CONCIERGE</div></div>
+<script src="vendor/qrcode.js"></script>
+<script>
+const code = new URLSearchParams(location.search).get('code');
+fetch('/api/badge?code=' + encodeURIComponent(code)).then(r => r.json()).then(b => {
+  if (b.error) { document.getElementById('name').textContent = 'Badge not found'; return; }
+  document.getElementById('cat').textContent = b.category;
+  document.getElementById('name').textContent = b.name;
+  document.getElementById('co').textContent = b.company || '';
+  const qr = qrcode(0, 'M'); qr.addData(b.code); qr.make();
+  document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+  setTimeout(() => print(), 300);
+});
+</script>
+</body>
+</html>

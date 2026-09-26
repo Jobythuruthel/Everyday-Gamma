@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONCIERGE</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button class="lang" id="lang" type="button">العربية</button>
+<main>
+  <section class="screen on" id="s-scan">
+    <span class="label" data-t="label"></span>
+    <h1 data-t="welcome"></h1>
+    <p class="sub" data-t="scanHelp"></p>
+    <div class="scanner" aria-hidden="true"><svg viewBox="0 0 24 24" width="72" height="72" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 7V3h4M17 3h4v4M21 17v4h-4M7 21H3v-4"/><rect x="7" y="7" width="4" height="4"/><rect x="13" y="7" width="4" height="4"/><rect x="7" y="13" width="4" height="4"/><path d="M13 13h4v4h-4z" opacity=".5"/></svg></div>
+    <form id="f-scan" autocomplete="off"><input class="scan" id="code" maxlength="64" data-ph="codePh" spellcheck="false"></form>
+    <p class="error" id="scan-err" role="alert"></p>
+    <div class="row">
+      <button type="button" data-go="find"><span data-t="findMe"></span></button>
+      <button type="button" data-go="walkin"><span data-t="notRegistered"></span></button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-find">
+    <span class="label" data-t="label"></span>
+    <h2 data-t="findTitle"></h2>
+    <form id="f-find" class="panel" novalidate style="display:grid;gap:16px" autocomplete="off">
+      <label class="field"><span data-t="emailOrMobile"></span><input name="q" maxlength="120"></label>
+      <p class="error" id="find-err" role="alert"></p>
+      <div class="row"><button type="button" data-home><span data-t="back"></span></button><button class="primary" type="submit"><span data-t="checkIn"></span></button></div>
+    </form>
+  </section>
+
+  <section class="screen" id="s-walkin">
+    <span class="label" data-t="label"></span>
+    <h2 data-t="walkinTitle"></h2>
+    <form id="f-walkin" class="panel" novalidate style="display:grid;gap:16px" autocomplete="off">
+      <label class="field"><span data-t="name"></span><input name="name" maxlength="60"></label>
+      <label class="field"><span data-t="company"></span><input name="company" maxlength="80"></label>
+      <label class="field"><span data-t="email"></span><input name="email" type="email" inputmode="email" maxlength="120"></label>
+      <label class="field"><span data-t="mobile"></span><input name="mobile" inputmode="tel" maxlength="20"></label>
+      <p class="error" id="walkin-err" role="alert"></p>
+      <div class="row"><button type="button" data-home><span data-t="back"></span></button><button class="primary" type="submit"><span data-t="getBadge"></span></button></div>
+    </form>
+  </section>
+
+  <section class="screen" id="s-welcome">
+    <span class="chip-cat" id="w-cat"></span>
+    <h1 id="w-title"></h1>
+    <p class="sub" id="w-company"></p>
+    <div class="panel"><p id="w-badge"></p><p id="w-host" class="sub"></p></div>
+    <span class="ms" id="w-ms"></span>
+  </section>
+</main>
+<div class="credit">F-8091 CONCIERGE · Joby Thuruthel | FAIM</div>
+<script src="app.js"></script>
+</body>
+</html>

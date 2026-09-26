@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AEGIS Wall</title>
+<link rel="stylesheet" href="style.css">
+<style>main{align-items:start;padding:64px}.screen{width:min(1200px,100%)}.board li{font-size:clamp(20px,2.4vw,34px);padding:20px 32px}.status{font:12px var(--mono);color:var(--ink-2)}</style>
+</head>
+<body>
+<main><section class="screen on">
+  <div class="row"><span class="pulse"></span><span class="label">Live · Today's safest controllers · أفضل مراقبي السلامة اليوم</span></div>
+  <h1>Zero Incident Mission</h1>
+  <ol class="board" id="board"></ol>
+  <span class="status" id="status"></span>
+</section></main>
+<div class="credit">FX-1190 AEGIS · Joby Thuruthel | FAIM</div>
+<script>
+const board = document.getElementById('board'), status = document.getElementById('status');
+function render(rows) {
+  board.replaceChildren(...rows.map(r => { const li = document.createElement('li'), n = document.createElement('span'), s = document.createElement('b'); n.textContent = r.name; s.textContent = r.score; li.append(n, s); return li; }));
+  status.textContent = rows.length ? '' : 'Waiting for the first controller…';
+}
+// EventSource reconnects on its own if the server restarts.
+const es = new EventSource('/api/board/stream');
+es.onmessage = e => render(JSON.parse(e.data));
+es.onerror = () => { status.textContent = 'Reconnecting…'; };
+setTimeout(() => location.reload(), 6 * 60 * 60 * 1000); // fresh page every 6 hours
+</script>
+</body>
+</html>
